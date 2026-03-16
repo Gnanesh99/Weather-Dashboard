@@ -1,0 +1,187 @@
+body{
+
+background: linear-gradient(135deg,#4facfe,#00f2fe);
+min-height:100vh;
+font-family:Arial, Helvetica, sans-serif;
+margin:0;
+color:white;
+
+}
+
+header{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+padding:20px;
+
+}
+
+input{
+
+padding:10px;
+border:none;
+border-radius:6px;
+width:200px;
+
+}
+
+button{
+
+padding:10px 14px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#1e3c72;
+color:white;
+
+}
+
+.container{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:30px;
+
+}
+
+.weather-card{
+
+background: rgba(255,255,255,0.25);
+backdrop-filter: blur(20px);
+border-radius:20px;
+padding:30px;
+width:350px;
+text-align:center;
+margin-top:40px;
+box-shadow:0 8px 32px rgba(0,0,0,0.25);
+
+}
+
+.weather-card p{
+
+margin:6px 0;
+
+}
+
+.chart-section{
+
+margin-top:40px;
+width:600px;
+
+}
+
+canvas{
+
+background:white;
+border-radius:10px;
+padding:10px;
+
+}
+#welcomeMessage{
+opacity:0.8;
+font-size:16px;
+margin-bottom:10px;
+}
+
+.chart-card{
+width:80%;
+max-width:800px;
+height:350px;
+margin:30px auto;
+padding:20px;
+
+background:rgba(255,255,255,0.2);
+border-radius:20px;
+
+backdrop-filter:blur(10px);
+}
+
+.chart-section{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+margin-top:40px;
+
+}
+
+canvas{
+
+width:100% !important;
+max-height:300px;
+
+background:transparent;
+
+}
+
+#forecastSection{
+display:none;
+margin-top:40px;
+text-align:center;
+}
+
+.chart-container{
+width:80%;
+max-width:800px;
+height:350px;
+margin:30px auto;
+background:rgba(255,255,255,0.15);
+border-radius:20px;
+padding:20px;
+backdrop-filter:blur(10px);
+}
+
+#tempChart{
+width:100%;
+height:100%;
+}
+
+/* DARK MODE */
+
+body.dark{
+background:#0f172a;
+color:white;
+}
+
+body.dark header{
+background:rgba(0,0,0,0.3);
+}
+
+body.dark input{
+background:#1e293b;
+color:white;
+border:none;
+}
+
+body.dark button{
+background:#1e293b;
+color:white;
+}
+
+body.dark .weather-card{
+background:rgba(0,0,0,0.4);
+}
+
+body.dark .chart-card{
+background:rgba(0,0,0,0.4);
+}
+#weatherAnimation{
+display:flex;
+justify-content:center;
+align-items:center;
+margin:10px 0;
+height:90px;
+}
+
+#weatherIcon{
+width:80px;
+height:80px;
+max-width:80px;
+max-height:80px;
+display:block;
+margin:auto;
+}

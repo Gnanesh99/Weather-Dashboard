@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Weather Dashboard</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="icon" href="data:,">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://darkskyapp.github.io/skycons/skycons.js"></script>
+
+
+</head>
+
+
+<body>
+
+<header>
+
+<h1>Weather Dashboard</h1>
+
+<input id="city" placeholder="Enter city name">
+
+<button onclick="getWeather()">Search</button>
+
+<button onclick="detectLocation()">📍 Use My Location</button>
+
+<button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+</header>
+
+
+
+<div class="container">
+
+<!-- WEATHER CARD -->
+
+<div class="weather-card" id="currentWeather">
+
+<h2 id="cityName">🌤 Welcome</h2>
+
+<p id="welcomeMessage">
+Search for a city or click "Use My Location" to see the weather.
+</p>
+
+<div id="weatherAnimation">
+    <canvas id="weatherIcon" width="80" height="80"></canvas>
+</div>
+
+<p id="description"></p>
+<p id="temperature"></p>
+<p id="feelsLike"></p>
+<p id="humidity"></p>
+<p id="pressure"></p>
+<p id="visibility"></p>
+<p id="wind"></p>
+<p id="sunrise"></p>
+<p id="sunset"></p>
+
+</div>
+
+<!-- FORECAST SECTION (Hidden until search) -->
+
+<section id="forecastSection" style="display:none;">
+
+<h2>Hourly Temperature Forecast</h2>
+
+<div class="chart-card">
+
+<canvas id="tempChart"></canvas>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+
+<script src="js/weather.js"></script>
+
+</body>
+
+</html>
