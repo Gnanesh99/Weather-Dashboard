@@ -1,10 +1,10 @@
 body{
 
-background: linear-gradient(135deg,#4facfe,#00f2fe);
+background: linear-gradient(135deg,hsl(165, 69%, 49%),#f2a3f0);
 min-height:100vh;
 font-family:Arial, Helvetica, sans-serif;
 margin:0;
-color:white;
+color:#0f0b0b;
 
 }
 
@@ -33,7 +33,7 @@ padding:10px 14px;
 border:none;
 border-radius:6px;
 cursor:pointer;
-background:#1e3c72;
+background:hwb(300 4% 95%);
 color:white;
 
 }
@@ -75,7 +75,7 @@ width:600px;
 
 canvas{
 
-background:white;
+background:rgb(198, 78, 96);
 border-radius:10px;
 padding:10px;
 
@@ -93,7 +93,7 @@ height:350px;
 margin:30px auto;
 padding:20px;
 
-background:rgba(255,255,255,0.2);
+background:rgba(60, 212, 128, 0.2);
 border-radius:20px;
 
 backdrop-filter:blur(10px);
@@ -152,7 +152,7 @@ background:rgba(0,0,0,0.3);
 }
 
 body.dark input{
-background:#1e293b;
+background:#ced4df;
 color:white;
 border:none;
 }
