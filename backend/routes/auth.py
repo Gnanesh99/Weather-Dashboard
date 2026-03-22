@@ -35,39 +35,35 @@ def register():
 
 @auth_routes.route("/login", methods=["POST"])
 def login():
-
     data = request.json
-
     email = data["email"]
     password = data["password"]
 
     db = get_db()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute(
-        "SELECT * FROM users WHERE email=%s",
-        (email,)
-    )
-
+    cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
 
-    if not user:
-        return jsonify({"message": "User not found"}), 404
+    if user and bcrypt.checkpw(password.encode(), user["password"].encode()):
+        
+        token = jwt.encode(
+            {"user_id": user["id"], "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)},
+            SECRET,
+            algorithm="HS256"
+        )
 
-    # bcrypt requires bytes
-    if not bcrypt.checkpw(password.encode(), user["password"].encode()):
-        return jsonify({"message": "Invalid password"}), 401
+        if isinstance(token, bytes):
+            token = token.decode()
 
-    token = jwt.encode(
-        {
-            "user_id": user["id"],
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
-        },
-        SECRET,
-        algorithm="HS256"
-    )
+        return jsonify({
+            "message": "Login successful",
+            "token": token,
+            "user": {
+                "id": user["id"],
+                "username": user["username"]
+            }
+        })
 
-    return jsonify({
-        "token": token,
-        "user": user
-    })
+    else:
+        return jsonify({"message": "Invalid credentials"}), 401

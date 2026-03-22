@@ -62,7 +62,16 @@ Search for a city or click "Use My Location" to see the weather.
 <p id="sunset"></p>
 
 </div>
+<h2 id="welcomeUser"></h2>
 
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(user){
+    document.getElementById("welcomeUser").innerText =
+        "Welcome, " + user.username;
+}
+</script>
 <!-- FORECAST SECTION (Hidden until search) -->
 
 <section id="forecastSection" style="display:none;">
@@ -83,6 +92,14 @@ Search for a city or click "Use My Location" to see the weather.
 
 
 <script src="js/weather.js"></script>
+<script>
+const token = localStorage.getItem("token");
+
+if(!token){
+    alert("Please login first");
+    window.location.href = "login.html";
+}
+</script>
 
 </body>
 
