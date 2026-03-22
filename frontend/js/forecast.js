@@ -5,7 +5,7 @@ async function getForecast(){
 const city=document.getElementById("city").value
 
 const response=await fetch(
-"http://localhost:5000/api/weather/forecast/"+city
+"/api/weather/forecast/"+city
 )
 
 const data=await response.json()

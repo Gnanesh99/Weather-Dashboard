@@ -23,7 +23,7 @@ try{
 
 // CURRENT WEATHER
 const response = await fetch(
-"http://localhost:5000/api/weather/current/" + city
+"/api/weather/current/" + city
 );
 
 const data = await response.json();
@@ -33,7 +33,7 @@ displayCurrentWeather(data);
 
 // FORECAST WEATHER
 const forecastResponse = await fetch(
-"http://localhost:5000/api/weather/forecast/" + city
+"/api/weather/" + city
 );
 
 const forecastData = await forecastResponse.json();

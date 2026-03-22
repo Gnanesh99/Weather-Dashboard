@@ -4,7 +4,7 @@ async function addFavorite(){
 
 const city=document.getElementById("city").value
 
-await fetch("http://localhost:5000/api/favorites/add",{
+await fetch("/api/favorites/add",{
 
 method:"POST",
 
