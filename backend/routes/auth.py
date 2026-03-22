@@ -35,44 +35,16 @@ def register():
 
 @auth_routes.route("/login", methods=["POST"])
 def login():
-    try:
-        data = request.json
-        email = data["email"]
-        password = data["password"]
+    data = request.json
+    email = data["email"]
+    password = data["password"]
 
-        db = get_db()
-        cursor = db.cursor(dictionary=True)
-
-        cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
-        user = cursor.fetchone()
-
-        if not user:
-            return jsonify({"message": "User not found"}), 404
-
-        if not bcrypt.checkpw(password.encode(), user["password"].encode()):
-            return jsonify({"message": "Invalid password"}), 401
-
-        token = jwt.encode(
-            {
-                "user_id": user["id"],
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-            },
-            SECRET,
-            algorithm="HS256"
-        )
-
-        if isinstance(token, bytes):
-            token = token.decode()
-
+    # 🔥 TEMPORARY TEST LOGIN (bypass DB)
+    if email == "test@gmail.com" and password == "123":
         return jsonify({
             "message": "Login successful",
-            "token": token,
-            "user": {
-                "id": user["id"],
-                "username": user["username"]
-            }
+            "token": "dummy",
+            "user": {"id": 1, "username": "Test User"}
         })
 
-    except Exception as e:
-        print("LOGIN ERROR:", str(e))  # 🔥 shows in Render logs
-        return jsonify({"message": "Server error"}), 500
+    return jsonify({"message": "Invalid credentials"}), 401
