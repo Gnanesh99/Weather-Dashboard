@@ -22,21 +22,25 @@ return;
 try{
 
 // CURRENT WEATHER
-const response = await fetch(
-"/api/weather/current/" + city
-);
-
+const response = await fetch("/api/weather/current/" + city);
 const data = await response.json();
+
+if (!response.ok || data.cod != 200) {
+    alert(data.message || "Error fetching weather");
+    return;
+}
 
 displayCurrentWeather(data);
 
 
 // FORECAST WEATHER
-const forecastResponse = await fetch(
-"/api/weather/" + city
-);
-
+const forecastResponse = await fetch("/api/weather/" + city);
 const forecastData = await forecastResponse.json();
+
+if (!forecastResponse.ok || forecastData.cod != "200") {
+    alert("Error fetching forecast");
+    return;
+}
 
 createTempChart(forecastData);
 
