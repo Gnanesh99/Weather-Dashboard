@@ -35,20 +35,28 @@ def register():
 
 @auth_routes.route("/login", methods=["POST"])
 def login():
-    data = request.json
-    email = data["email"]
-    password = data["password"]
+    try:
+        data = request.json
+        email = data["email"]
+        password = data["password"]
 
-    db = get_db()
-    cursor = db.cursor(dictionary=True)
+        db = get_db()
+        cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
-    user = cursor.fetchone()
+        cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+        user = cursor.fetchone()
 
-    if user and bcrypt.checkpw(password.encode(), user["password"].encode()):
-        
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        if not bcrypt.checkpw(password.encode(), user["password"].encode()):
+            return jsonify({"message": "Invalid password"}), 401
+
         token = jwt.encode(
-            {"user_id": user["id"], "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)},
+            {
+                "user_id": user["id"],
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+            },
             SECRET,
             algorithm="HS256"
         )
@@ -65,5 +73,6 @@ def login():
             }
         })
 
-    else:
-        return jsonify({"message": "Invalid credentials"}), 401
+    except Exception as e:
+        print("LOGIN ERROR:", str(e))  # 🔥 shows in Render logs
+        return jsonify({"message": "Server error"}), 500
