@@ -11,26 +11,30 @@ SECRET = "weather_secret"
 
 @auth_routes.route("/register", methods=["POST"])
 def register():
+    try:
+        data = request.json
 
-    data = request.json
+        username = data["username"]
+        email = data["email"]
+        password = data["password"]
 
-    username = data["username"]
-    email = data["email"]
-    password = data["password"]
+        hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        db = get_db()
+        cursor = db.cursor()
 
-    db = get_db()
-    cursor = db.cursor()
+        cursor.execute(
+            "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
+            (username, email, hashed)
+        )
 
-    cursor.execute(
-        "INSERT INTO users (username,email,password) VALUES (%s,%s,%s)",
-        (username, email, hashed)
-    )
+        db.commit()
 
-    db.commit()
+        return jsonify({"message": "User registered"})
 
-    return jsonify({"message": "User registered"})
+    except Exception as e:
+        print("REGISTER ERROR:", str(e))  # 🔥 check logs
+        return jsonify({"message": "Server error"}), 500
 
 
 @auth_routes.route("/login", methods=["POST"])
