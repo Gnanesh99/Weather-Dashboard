@@ -37,10 +37,11 @@ displayCurrentWeather(data);
 const forecastResponse = await fetch("/api/weather/" + city);
 const forecastData = await forecastResponse.json();
 
-if (!forecastResponse.ok || forecastData.cod != "200") {
+if (!forecastResponse.ok || forecastData.cod != 200) {
     alert("Error fetching forecast");
     return;
 }
+console.log(forecastData);
 
 createTempChart(forecastData);
 
