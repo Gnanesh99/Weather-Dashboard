@@ -7,8 +7,8 @@ def get_db():
         user=os.environ.get("DB_USER"),
         password=os.environ.get("DB_PASSWORD"),
         database=os.environ.get("DB_NAME"),
-        port=int(os.environ.get("DB_PORT", 3306)),
-        ssl_disabled=False,  # important for hosted DB
-        ssl_verify_cert=False
+        port=int(os.environ.get("DB_PORT")),
+        connection_timeout=5,   # 🔥 prevents hanging
+        ssl_disabled=True       # 🔥 IMPORTANT for Railway proxy
     )
     return db
