@@ -20,8 +20,7 @@ if(response.ok){
 localStorage.setItem("token", data.token);
 localStorage.setItem("user", JSON.stringify(data.user));
 
-// 🔥 redirect
-window.location.href = "dashboard.html";
+window.location.href = "/dashboard.html";
 
 }else{
 alert(data.message);

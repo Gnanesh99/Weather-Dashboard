@@ -3,6 +3,7 @@ from db import get_db
 import bcrypt
 import jwt
 import datetime
+import traceback
 
 auth_routes = Blueprint("auth", __name__)
 
@@ -32,16 +33,19 @@ def register():
         )
 
         db.commit()
+        cursor.close()
+        db.close()
 
         return jsonify({"message": "User registered"})
 
     except Exception as e:
         print("REGISTER ERROR:", str(e))
+        traceback.print_exc()
         return jsonify({"message": "Server error"}), 500
 
 
 # =========================
-# LOGIN (REAL VERSION)
+# LOGIN
 # =========================
 @auth_routes.route("/login", methods=["POST"])
 def login():
@@ -62,11 +66,9 @@ def login():
         if not user:
             return jsonify({"message": "Invalid credentials"}), 401
 
-        # check password
         if not bcrypt.checkpw(password.encode(), user["password"].encode()):
             return jsonify({"message": "Invalid credentials"}), 401
 
-        # create token
         token = jwt.encode({
             "user_id": user["id"],
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
@@ -84,4 +86,5 @@ def login():
 
     except Exception as e:
         print("LOGIN ERROR:", str(e))
+        traceback.print_exc()
         return jsonify({"message": "Server error"}), 500
