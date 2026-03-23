@@ -60,7 +60,6 @@ document.getElementById("forecastSection").style.display = "block";
 }catch(error){
 
 console.error("FETCH ERROR:", error);
-alert("Network error. Please try again.");
 
 }
 
