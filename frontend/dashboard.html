@@ -39,6 +39,15 @@
 
 <!-- WEATHER CARD -->
 
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(user){
+    document.getElementById("welcomeUser").innerText =
+        "Welcome, " + user.username;
+}
+</script>
+
 <div class="weather-card" id="currentWeather">
 
 <h2 id="cityName">🌤 Welcome</h2>
@@ -64,14 +73,7 @@ Search for a city or click "Use My Location" to see the weather.
 </div>
 <h2 id="welcomeUser"></h2>
 
-<script>
-const user = JSON.parse(localStorage.getItem("user"));
 
-if(user){
-    document.getElementById("welcomeUser").innerText =
-        "Welcome, " + user.username;
-}
-</script>
 <!-- FORECAST SECTION (Hidden until search) -->
 
 <section id="forecastSection" style="display:none;">
