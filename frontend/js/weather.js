@@ -25,7 +25,7 @@ try{
 const response = await fetch("/api/weather/current/" + city);
 const data = await response.json();
 
-if (!response.ok || data.cod != 200) {
+if (!response.ok || Number(data.cod) !== 200) {
     alert(data.message || "Error fetching weather");
     return;
 }
