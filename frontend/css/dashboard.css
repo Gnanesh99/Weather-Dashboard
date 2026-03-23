@@ -185,3 +185,8 @@ max-height:80px;
 display:block;
 margin:auto;
 }
+
+.switch{
+    margin-top:15px;
+    text-align:center;   /* 🔥 this centers it */
+}

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-
-<head><meta charset="utf-8">
-
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Register</title>
 
 <link rel="stylesheet" href="css/style.css">
@@ -11,24 +11,46 @@
 
 <body>
 
-<div class="auth-container">
+<div class="container">
 
-<h2>Create Account</h2>
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <h1>Join Weather Dashboard 🌤️</h1>
+        <p>Get real-time weather updates instantly.</p>
+    </div>
 
-<input id="username" placeholder="Username">
+    <!-- RIGHT SIDE -->
+    <div class="right">
 
-<input id="email" placeholder="Email">
+        <h2>Create Account ✨</h2>
+        <p class="subtitle">Start your journey</p>
 
-<input id="password" type="password" placeholder="Password">
+        <div class="input-box">
+            <input type="text" id="username" required>
+            <label>Username</label>
+        </div>
 
-<button onclick="register()">Register</button>
+        <div class="input-box">
+            <input type="email" id="email" required>
+            <label>Email</label>
+        </div>
 
-<p>Already have account? <a href="login.html">Login</a></p>
+        <div class="input-box">
+            <input type="password" id="password" required>
+            <label>Password</label>
+        </div>
+
+        <button onclick="register()">Register</button>
+
+        <p class="switch">
+            Already have an account? <a href="login.html">Login</a>
+        </p>
+
+    </div>
 
 </div>
 
 <script src="js/register.js"></script>
 
 </body>
-
 </html>
