@@ -9,5 +9,6 @@ def get_db():
         database=os.environ.get("DB_NAME"),
         port=int(os.environ.get("DB_PORT", 3306)),
         ssl_disabled=False   # important for hosted DB
+        ssl_verify_cert=False
     )
     return db
