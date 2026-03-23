@@ -9,6 +9,9 @@ auth_routes = Blueprint("auth", __name__)
 SECRET = "weather_secret"
 
 
+# =========================
+# REGISTER
+# =========================
 @auth_routes.route("/register", methods=["POST"])
 def register():
     try:
@@ -33,22 +36,52 @@ def register():
         return jsonify({"message": "User registered"})
 
     except Exception as e:
-        print("REGISTER ERROR:", str(e))  # 🔥 check logs
+        print("REGISTER ERROR:", str(e))
         return jsonify({"message": "Server error"}), 500
 
 
+# =========================
+# LOGIN (REAL VERSION)
+# =========================
 @auth_routes.route("/login", methods=["POST"])
 def login():
-    data = request.json
-    email = data["email"]
-    password = data["password"]
+    try:
+        data = request.json
+        email = data["email"]
+        password = data["password"]
 
-    # 🔥 TEMPORARY TEST LOGIN (bypass DB)
-    if email == "test@gmail.com" and password == "123":
+        db = get_db()
+        cursor = db.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+
+        cursor.close()
+        db.close()
+
+        if not user:
+            return jsonify({"message": "Invalid credentials"}), 401
+
+        # check password
+        if not bcrypt.checkpw(password.encode(), user["password"].encode()):
+            return jsonify({"message": "Invalid credentials"}), 401
+
+        # create token
+        token = jwt.encode({
+            "user_id": user["id"],
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        }, SECRET, algorithm="HS256")
+
         return jsonify({
             "message": "Login successful",
-            "token": "dummy",
-            "user": {"id": 1, "username": "Test User"}
+            "token": token,
+            "user": {
+                "id": user["id"],
+                "username": user["username"],
+                "email": user["email"]
+            }
         })
 
-    return jsonify({"message": "Invalid credentials"}), 401
+    except Exception as e:
+        print("LOGIN ERROR:", str(e))
+        return jsonify({"message": "Server error"}), 500

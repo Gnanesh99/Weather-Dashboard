@@ -15,44 +15,52 @@ async function getWeather(){
 const city = document.getElementById("city").value;
 
 if(!city){
-alert("Please enter a city name");
-return;
+    alert("Please enter a city name");
+    return;
 }
 
 try{
 
+// helper function (🔥 avoids repetition)
+function isError(res, data){
+    return !res.ok || Number(data.cod) !== 200;
+}
+
+// ===============================
 // CURRENT WEATHER
+// ===============================
 const response = await fetch("/api/weather/current/" + city);
 const data = await response.json();
 
-if (!response.ok || Number(data.cod) !== 200) {
-    alert(data.message || "Error fetching weather");
+if (isError(response, data)) {
+    alert(data.message || "Error fetching current weather");
     return;
 }
 
 displayCurrentWeather(data);
 
 
+// ===============================
 // FORECAST WEATHER
+// ===============================
 const forecastResponse = await fetch("/api/weather/" + city);
 const forecastData = await forecastResponse.json();
 
-if (!forecastResponse.ok || forecastData.cod != 200) {
-    alert("Error fetching forecast");
+if (isError(forecastResponse, forecastData)) {
+    alert(forecastData.message || "Error fetching forecast");
     return;
 }
-console.log(forecastData);
 
 createTempChart(forecastData);
 
 
-// SHOW FORECAST SECTION
+// ===============================
 document.getElementById("forecastSection").style.display = "block";
 
 }catch(error){
 
-console.error(error);
-alert("Error fetching weather");
+console.error("FETCH ERROR:", error);
+alert("Network error. Please try again.");
 
 }
 
