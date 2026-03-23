@@ -22,10 +22,14 @@ def register():
         email = data["email"]
         password = data["password"]
 
+        print("DATA RECEIVED:", data)  # 🔥 debug
+
         hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
         db = get_db()
         cursor = db.cursor()
+
+        print("CONNECTED TO DB")  # 🔥
 
         cursor.execute(
             "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
@@ -33,15 +37,14 @@ def register():
         )
 
         db.commit()
-        cursor.close()
-        db.close()
+
+        print("USER INSERTED")  # 🔥
 
         return jsonify({"message": "User registered"})
 
     except Exception as e:
-        print("REGISTER ERROR:", str(e))
-        traceback.print_exc()
-        return jsonify({"message": "Server error"}), 500
+        print("REGISTER ERROR:", str(e))  # 🔥 THIS IS KEY
+        return jsonify({"message": str(e)}), 500
 
 
 # =========================
